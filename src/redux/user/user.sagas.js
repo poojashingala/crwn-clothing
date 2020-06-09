@@ -49,16 +49,6 @@ export function* signInWithEmail({payload: {email, password} }) {
     }
 }
 
-export function* signUpUser({ payload: { email, password, displayName } }) {
-    try{ 
-        const { user } = yield auth.createUserWithEmailAndPassword( email, password );
-        yield getSnapshotFromUserAuth(user, {displayName})
-        yield put( signUpSuccess({ user, additionalData: { displayName } }) );
-    } catch(error) {
-        yield put(signUpFailure(error));
-    }
-}
-
 export function* isUserAuthenticated() {
     try{
         const userAuth = yield getCurrentUser();
@@ -78,7 +68,16 @@ export function* signOutUser() {
     }
 }
 
-export function* signInAfterSignUp({ user, additionalData }){
+export function* signUpUser({ payload: { email, password, displayName } }) {
+    try{ 
+        const { user } = yield auth.createUserWithEmailAndPassword( email, password );
+        yield put( signUpSuccess({ user, additionalData: { displayName } }) );
+    } catch(error) {
+        yield put(signUpFailure(error));
+    }
+}
+
+export function* signInAfterSignUp({ payload: { user, additionalData } }){
     yield getSnapshotFromUserAuth(user, additionalData);
 }
 
