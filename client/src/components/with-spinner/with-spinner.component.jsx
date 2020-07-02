@@ -1,17 +1,9 @@
 import React from 'react';
+import Spinner from '../spinner/spinner.components';
 
-import { SpinnerContainer, SpinnerOverlay } from './with-spinner.styles';
-
-const WithSpinner = WrappedComponent => {
-    const Spinner = ({ isLoading, ...otherProps }) => {
-        return isLoading ? 
-        (<SpinnerOverlay>
-            <SpinnerContainer />
-        </SpinnerOverlay>) :
-        <WrappedComponent { ...otherProps } />
-    }
-    return Spinner;
-}
+const WithSpinner = WrappedComponent =>  ({ isLoading, ...otherProps }) => {
+    return isLoading ? <Spinner /> : <WrappedComponent { ...otherProps } />
+};
 
 //Another way to write HOC.
 // const WithSpinner = WrappedComponent => ({ isLoading, ...otherProps }) => {
