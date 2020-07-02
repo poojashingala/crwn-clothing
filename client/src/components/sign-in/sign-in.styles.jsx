@@ -1,9 +1,13 @@
 import styled from 'styled-components';
 
 export const SignInContainer = styled.div`
-    width: 27vw;
+    width: 380px;
     display: flex;
     flex-direction: column;
+
+    @media screen and (max-width: 800px) {
+        width: 340px;
+    }   
 `;
 
 export const TitleContainer = styled.h2`
@@ -11,6 +15,7 @@ export const TitleContainer = styled.h2`
 `;
 
 export const ButtonsContainer = styled.div`
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 15px;
 `;

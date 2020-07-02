@@ -14,7 +14,7 @@ import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up
 import Header from './components/header/header.component';
 import CheckoutPage from './components/checkout/checkout.component';
 
-import './App.css';
+import { GlobalStyles } from './global.styles';
 
 const App = ({ checkUserSession, currentUser }) => {
 	useEffect(() => {
@@ -23,6 +23,7 @@ const App = ({ checkUserSession, currentUser }) => {
 	
 	return (
 		<div>
+			<GlobalStyles/>
 			<Header />
 			<Switch>
 				<Route exact path='/' component={HomePage}></Route>
