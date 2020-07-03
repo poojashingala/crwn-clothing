@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchCollectionsStart } from '../../redux/shop/shop.actions';
 import Spinner from '../../components/spinner/spinner.components';
+import ErrorBoundary from '../../components/error-boundary/error-boundary.components';
 
 const CollectionOverviewContainer = lazy(() => import('../../components/collections-overview/collections-overview.container'));
 const CollectionPageContainer = lazy( () => import('../collection/collection.container'));
@@ -13,17 +14,18 @@ const ShopPage = ({ fetchCollectionsStart, match }) => {
    }, [fetchCollectionsStart])
     return(
         <div className="shop-page">
-            <Suspense fallback={<Spinner />}>
-                <Route exact 
-                    path={`${match.path}`} 
-                    component={CollectionOverviewContainer} 
-                />
-                <Route 
-                    path={`${match.path}/:collectionId` } 
-                    component={CollectionPageContainer} 
-                />
-            </Suspense>
-            
+            <ErrorBoundary>
+                <Suspense fallback={<Spinner />}>
+                    <Route exact 
+                        path={`${match.path}`} 
+                        component={CollectionOverviewContainer} 
+                    />
+                    <Route 
+                        path={`${match.path}/:collectionId` } 
+                        component={CollectionPageContainer} 
+                    />
+                </Suspense>
+            </ErrorBoundary>  
         </div>
     );
 };

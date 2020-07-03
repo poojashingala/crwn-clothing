@@ -9,6 +9,7 @@ import { checkUserSession } from './redux/user/user.actions';
 
 import Header from './components/header/header.component';
 import Spinner from './components/spinner/spinner.components';
+import ErrorBoundry from './components/error-boundary/error-boundary.components';
 
 import { GlobalStyles } from './global.styles';
 
@@ -27,20 +28,22 @@ const App = ({ checkUserSession, currentUser }) => {
 			<GlobalStyles/>
 			<Header />
 			<Switch>
-				<Suspense fallback={<Spinner />}>
-					<Route exact path='/' component={HomePage}></Route>
-				
-					<Route path='/shop' component={ShopPage}></Route>
-					<Route exact path='/checkout' component={CheckoutPage}></Route>
-					<Route exact 
-						path='/signin' 
-						render={ () => 
-							currentUser ? 
-								( <Redirect to="/" /> ) : 
-								( <SignInAndSignUpPage /> ) 
-						}>
-					</Route>
-				</Suspense>
+				<ErrorBoundry>
+					<Suspense fallback={<Spinner />}>
+						<Route exact path='/' component={HomePage}></Route>
+					
+						<Route path='/shop' component={ShopPage}></Route>
+						<Route exact path='/checkout' component={CheckoutPage}></Route>
+						<Route exact 
+							path='/signin' 
+							render={ () => 
+								currentUser ? 
+									( <Redirect to="/" /> ) : 
+									( <SignInAndSignUpPage /> ) 
+							}>
+						</Route>
+					</Suspense>
+				</ErrorBoundry>
 			</Switch>    
 		</div>
 	);
